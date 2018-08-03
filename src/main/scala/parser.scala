@@ -1,5 +1,7 @@
 package com.stephentu.sql
 
+import scala.util.Try
+
 import scala.util.matching.Regex
 
 import scala.util.parsing.combinator._
@@ -221,5 +223,9 @@ class SQLParser extends StandardTokenParsers {
       case Success(r, q) => Option(r)
       case x => println(x); None
     }
+  }
+
+  def tryParse(sql:String): ParseResult[SelectStmt] = {
+    phrase(select)(new lexical.Scanner(sql))
   }
 }
